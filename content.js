@@ -19,7 +19,7 @@ function checkVideo() {
     for (var i = 0; i < supportedUrlList.length; i++) {
         if (window.location.hostname.indexOf(supportedUrlList[i]) != -1) {
             type = supportedUrlList[i];
-            if (type == "youku.com" && $("#player")) {
+            if (type == "youku.com" && $('#player')) {
                 return true;
             }
         }
@@ -33,22 +33,18 @@ function popover() {
     '<img src="' + iconurl + '"/>' +
     '</a>';
 
-    $('#sw_video img').css({
-        "display":"block",
-        "zIndex":1000,
-        "width":25,
-        "height":17,
-        "position":"absolute",
-        "top":ptop,
-        "left":pleft
-    });
-
-    tmp.hover(function(){
-        $(this).css({"cursor":"pointer"})
-    });
-
     $('#sw_video').remove();
     $('body').append(html);
+
+    $('#sw_video img').css({
+        "display": "block",
+        "zIndex": 1000,
+        "width": 50,
+        "height": 50,
+        "position": "absolute",
+        "top": $('#player').offset().top,
+        "left": $('#player').offset().left - 50
+    });
 
     $('#sw_video').mouseenter(function() {
         sw_video_lock = true;
@@ -56,7 +52,10 @@ function popover() {
     $('#sw_video').mouseleave(function() {
         sw_video_lock = false;
     });
-    $("#sw_video").click(function(event) {
+    $('#sw_video').hover(function(){
+        $(this).css({"cursor":"pointer"})
+    });
+    $('#sw_video').click(function(event) {
         fetchVideoInfo();
     });
 }
@@ -65,13 +64,13 @@ function fetchVideoInfo()
 {
     var url = "";
     if (type == "youku.com") {
-        url = $("param [name='movie']").attr("value") + "?" + $("param [name='flashvars']").attr("value");
+        url = $('#player param[name="movie"]').attr("value") + "?" + $('#player param[name="flashvars"]').attr("value");
         console.log(url);
     }
     chrome.runtime.sendMessage({
         type:type,
         url:url
-    }, function (response) {
+    }, function (window) {
 
     });
 }
