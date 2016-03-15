@@ -2,7 +2,8 @@ var enabled = false;
 var sw_video_lock;
 var type;
 var supportedUrlList = [
-    "youku.com"
+    "youku.com",
+    "sina.com"
 ];
 
 $(document).ready(function() {
@@ -21,6 +22,9 @@ function checkVideo() {
             type = supportedUrlList[i];
             if (type == "youku.com" && $('#player')) {
                 return true;
+            } else
+            if (type == "sina.com" && $('#myMovieBox')) {
+                return true;
             }
         }
     }
@@ -32,6 +36,13 @@ function popover() {
     var html = '<a class="sw_video" id="sw_video">' +
     '<img src="' + iconurl + '"/>' +
     '</a>';
+    var videoDiv;
+    if (type == "youku.com") {
+        videoDiv = $('#player');
+    } else
+    if (type == "sina.com") {
+        videoDiv = $('#myMovieBox');
+    }
 
     $('#sw_video').remove();
     $('body').append(html);
@@ -42,8 +53,8 @@ function popover() {
         "width": 50,
         "height": 50,
         "position": "absolute",
-        "top": $('#player').offset().top,
-        "left": $('#player').offset().left - 50
+        "top": videoDiv.offset().top,
+        "left": videoDiv.offset().left - 50
     });
 
     $('#sw_video').mouseenter(function() {
@@ -65,6 +76,10 @@ function fetchVideoInfo()
     var url = "";
     if (type == "youku.com") {
         url = $('#player param[name="movie"]').attr("value") + "?" + $('#player param[name="flashvars"]').attr("value");
+        console.log(url);
+    } else
+    if (type == "sina.com") {
+        url = $('#myMovieBox embed').attr("src") + "?" + $('#myMovieBox embed').attr("flashvars");
         console.log(url);
     }
     chrome.runtime.sendMessage({

@@ -4,9 +4,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 
 chrome.runtime.onMessage.addListener(function (request, sender, callback) {
     console.log(request);
-    if (request.type == "youku.com") {
-        newWindow(request.url, callback);
-    }
+    newWindow(request.url, callback);
     return true;
 });
 
