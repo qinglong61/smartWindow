@@ -3,7 +3,8 @@ var sw_video_lock;
 var type;
 var supportedUrlList = [
     "youku.com",
-    "sina.com"
+    "sina.com",
+    "miaopai.com"
 ];
 
 $(document).ready(function() {
@@ -25,6 +26,9 @@ function checkVideo() {
             } else
             if (type == "sina.com" && $('#myMovieBox')) {
                 return true;
+            } else
+            if (type == "miaopai.com" && $('.video_flash')) {
+                return true;
             }
         }
     }
@@ -42,6 +46,9 @@ function popover() {
     } else
     if (type == "sina.com") {
         videoDiv = $('#myMovieBox');
+    } else
+    if (type == "miaopai.com") {
+        videoDiv = $('.video_flash');
     }
 
     $('#sw_video').remove();
@@ -80,6 +87,10 @@ function fetchVideoInfo()
     } else
     if (type == "sina.com") {
         url = $('#myMovieBox embed').attr("src") + "?" + $('#myMovieBox embed').attr("flashvars");
+        console.log(url);
+    } else
+    if (type == "miaopai.com") {
+        url = $('.video_flash embed').attr("src");
         console.log(url);
     }
     chrome.runtime.sendMessage({
