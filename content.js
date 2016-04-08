@@ -4,7 +4,8 @@ var type;
 var supportedUrlList = [
     "youku.com",
     "sina.com",
-    "miaopai.com"
+    "miaopai.com",
+    "guancha.cn"
 ];
 
 $(document).ready(function() {
@@ -29,6 +30,9 @@ function checkVideo() {
             } else
             if (type == "miaopai.com" && $('.video_flash')) {
                 return true;
+            } else
+            if (type == "guancha.cn" && $('p embed')) {
+                return true;
             }
         }
     }
@@ -49,6 +53,9 @@ function popover() {
     } else
     if (type == "miaopai.com") {
         videoDiv = $('.video_flash');
+    } else
+    if (type == "guancha.cn") {
+        videoDiv = $('p embed');
     }
 
     $('#sw_video').remove();
@@ -91,6 +98,10 @@ function fetchVideoInfo()
     } else
     if (type == "miaopai.com") {
         url = $('.video_flash embed').attr("src");
+        console.log(url);
+    } else
+    if (type == "guancha.cn") {
+        url = $('p embed').attr("src");
         console.log(url);
     }
     chrome.runtime.sendMessage({
