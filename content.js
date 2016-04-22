@@ -22,16 +22,16 @@ function checkVideo() {
     for (var i = 0; i < supportedUrlList.length; i++) {
         if (window.location.hostname.indexOf(supportedUrlList[i]) != -1) {
             type = supportedUrlList[i];
-            if (type == "youku.com" && $('#player')) {
+            if (type == "youku.com" && $('#player').width()) {
                 return true;
             } else
-            if (type == "sina.com" && $('#myMovieBox')) {
+            if (type == "sina.com" && $('#myMovieBox').width()) {
                 return true;
             } else
-            if (type == "miaopai.com" && $('.video_flash')) {
+            if (type == "miaopai.com" && $('.video_flash').width()) {
                 return true;
             } else
-            if (type == "guancha.cn" && $('p embed')) {
+            if (type == "guancha.cn" && $('p embed').width()) {
                 return true;
             }
         }
