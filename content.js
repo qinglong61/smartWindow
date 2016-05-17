@@ -5,7 +5,8 @@ var supportedUrlList = [
     "youku.com",
     "sina.com",
     "miaopai.com",
-    "guancha.cn"
+    "guancha.cn",
+    "le.com"
 ];
 
 $(document).ready(function() {
@@ -33,6 +34,9 @@ function checkVideo() {
             } else
             if (type == "guancha.cn" && $('p embed').width()) {
                 return true;
+            } else
+            if (type == "le.com" && $('#player').width()) {
+                return true;
             }
         }
     }
@@ -56,6 +60,9 @@ function popover() {
     } else
     if (type == "guancha.cn") {
         videoDiv = $('p embed');
+    } else
+    if (type == "le.com") {
+        videoDiv = $('#player');
     }
 
     $('#sw_video').remove();
@@ -102,6 +109,10 @@ function fetchVideoInfo()
     } else
     if (type == "guancha.cn") {
         url = $('p embed').attr("src");
+        console.log(url);
+    } else
+    if (type == "le.com") {
+        url = $('#player embed').attr("src") + "?" + $('#player embed').attr("flashvars");
         console.log(url);
     }
     chrome.runtime.sendMessage({
