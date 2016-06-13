@@ -6,7 +6,8 @@ var supportedUrlList = [
     "sina.com",
     "miaopai.com",
     "guancha.cn",
-    "le.com"
+    "le.com",
+    "pan.baidu.com"
 ];
 
 $(document).ready(function() {
@@ -37,6 +38,9 @@ function checkVideo() {
             } else
             if (type == "le.com" && $('#player').width()) {
                 return true;
+            } else
+            if (type == "pan.baidu.com" && $('#video-wrap-inner embed').width()) {
+                return true;
             }
         }
     }
@@ -63,6 +67,9 @@ function popover() {
     } else
     if (type == "le.com") {
         videoDiv = $('#player');
+    } else
+    if (type == "pan.baidu.com") {
+        videoDiv = $('#video-wrap-inner embed');
     }
 
     $('#sw_video').remove();
@@ -113,6 +120,14 @@ function fetchVideoInfo()
     } else
     if (type == "le.com") {
         url = $('#player embed').attr("src") + "?" + $('#player embed').attr("flashvars");
+        console.log(url);
+    } else
+    if (type == "pan.baidu.com") {
+        var flashvars = $('#video-wrap-inner embed').attr("flashvars");
+        var reg = new RegExp("(^|&)" + "file" + "=([^&]*)(&|$)");
+        var r = flashvars.match(reg);
+        var file = r[0];
+        url = "http://pan.baidu.com" + $('#video-wrap-inner embed').attr("src") + file;
         console.log(url);
     }
     chrome.runtime.sendMessage({
