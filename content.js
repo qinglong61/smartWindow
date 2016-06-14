@@ -7,7 +7,8 @@ var supportedUrlList = [
     "miaopai.com",
     "guancha.cn",
     "le.com",
-    "pan.baidu.com"
+    "pan.baidu.com",
+    "bilibili.com"
 ];
 
 $(document).ready(function() {
@@ -41,6 +42,9 @@ function checkVideo() {
             } else
             if (type == "pan.baidu.com" && $('#video-wrap-inner embed').width()) {
                 return true;
+            } else
+            if (type == "bilibili.com" && $('#player_placeholder').width()) {
+                return true;
             }
         }
     }
@@ -70,6 +74,9 @@ function popover() {
     } else
     if (type == "pan.baidu.com") {
         videoDiv = $('#video-wrap-inner embed');
+    } else
+    if (type == "bilibili.com") {
+        videoDiv = $('#player_placeholder');
     }
 
     $('#sw_video').remove();
@@ -128,6 +135,10 @@ function fetchVideoInfo()
         var r = flashvars.match(reg);
         var file = r[0];
         url = "http://pan.baidu.com" + $('#video-wrap-inner embed').attr("src") + file;
+        console.log(url);
+    } else
+    if (type == "bilibili.com") {
+        url = $('#player_placeholder').attr("data") + "?" + $('#player_placeholder param[name="flashvars"]').attr("value");
         console.log(url);
     }
     chrome.runtime.sendMessage({
