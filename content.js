@@ -8,7 +8,8 @@ var supportedUrlList = [
     "guancha.cn",
     "le.com",
     "pan.baidu.com",
-    "bilibili.com"
+    "bilibili.com",
+    "ifeng.com"
 ];
 
 $(document).ready(function() {
@@ -45,6 +46,9 @@ function checkVideo() {
             } else
             if (type == "bilibili.com" && $('#player_placeholder').width()) {
                 return true;
+            } else
+            if (type == "ifeng.com" && $('#js_playVideo').width()) {
+                return true;
             }
         }
     }
@@ -77,6 +81,9 @@ function popover() {
     } else
     if (type == "bilibili.com") {
         videoDiv = $('#player_placeholder');
+    } else
+    if (type == "ifeng.com") {
+        videoDiv = $('#js_playVideo');
     }
 
     $('#sw_video').remove();
@@ -139,6 +146,10 @@ function fetchVideoInfo()
     } else
     if (type == "bilibili.com") {
         url = $('#player_placeholder').attr("data") + "?" + $('#player_placeholder param[name="flashvars"]').attr("value");
+        console.log(url);
+    } else
+    if (type == "ifeng.com") {
+        url = $('#js_playVideo').attr("src") + "?" + $('#js_playVideo').attr("flashvars");
         console.log(url);
     }
     chrome.runtime.sendMessage({
